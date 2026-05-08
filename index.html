@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<title>死ぬ前に3分だけ神になれる</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 共通ミュートボタン -->
+<button id="muteBtn" class="mute-btn" aria-label="サウンド切替">🔊</button>
+
+<!-- タイトル -->
+<section id="title" class="screen">
+  <div class="title-inner">
+    <div class="halo">😇</div>
+    <h1>
+      <span class="t1">死ぬ前に</span>
+      <span class="t2">3分だけ</span>
+      <span class="t3">神になれる</span>
+    </h1>
+    <p class="sub">…でも、どうせ全部ブラックエンドだ。</p>
+    <button id="startBtn" class="big-btn">▶ 物語を始める</button>
+    <p class="hint">所要時間 約4分<br>タップで進行</p>
+  </div>
+</section>
+
+<!-- オープニングムービー -->
+<section id="opening" class="screen" hidden>
+  <video id="openingVideo" playsinline preload="auto" src="opening.mp4"></video>
+  <button id="skipBtn">スキップ ▶</button>
+  <div id="tapToStart">▶ タップで再生</div>
+</section>
+
+<!-- プロローグ -->
+<section id="prologue" class="screen" hidden>
+  <button id="prologueSkip">スキップ ▶</button>
+  <div id="prologueBg"></div>
+  <div id="prologueStage">
+    <img id="prologueAvatarImg" src="img/god_bored.png" alt="">
+    <div id="prologueAvatar" hidden>😶</div>
+    <div id="prologueSpeaker">???</div>
+    <div id="prologueBox">
+      <p id="prologueText"></p>
+      <div id="prologueArrow">▼ タップで続ける</div>
+    </div>
+  </div>
+  <div id="missionCard" hidden>
+    <div class="mission-icon">⚖️</div>
+    <h2>あなたのミッション</h2>
+    <div class="mission-line good">👶 出生 → 🎓 学校 → 💼 社畜 → 👴 老後 → ⚰️ 墓場</div>
+    <div class="mission-line zero"><strong>5幕構成・90秒</strong>で人生完走</div>
+    <div class="mission-line bad">残ライフ❤×5 / 行動で死因90+から決定</div>
+    <p class="mission-warn">そして死に様は、自動で決まる。</p>
+    <div class="mission-tip">💡 操作: <b>画面をスワイプ</b> → 主人公が左右に動く<br>降ってくる「人生の運命」を <b>避けろ</b><br>5回当たったら早死に</div>
+    <button id="missionBtn" class="big-btn">⚡ 神になる（180秒）</button>
+  </div>
+</section>
+
+<!-- ゲーム画面 -->
+<section id="game" class="screen" hidden>
+  <header id="topbar">
+    <div class="status-line">
+      <div id="timer">1:30</div>
+      <div id="ageDisplay"><span class="age-label">年齢</span><span id="ageLabel">0歳</span></div>
+    </div>
+    <div id="livesRow">
+      <span id="livesDisplay"></span>
+      <span id="stageInfo"><span id="stageLabel">👶 出生編</span> <span id="stageChapter">第1章 誕生</span></span>
+    </div>
+    <div id="goalRibbon">🎯 90秒で生まれて死ぬ。 <b>避けて、生き延びろ</b></div>
+  </header>
+
+  <!-- ステージ突入バナー -->
+  <div id="stageBanner">
+    <div class="sb-chapter" id="sbChapter">第1章</div>
+    <div class="sb-title" id="sbTitle">出生編</div>
+    <div class="sb-age" id="sbAge">0歳〜</div>
+  </div>
+
+  <div id="scene">
+    <div id="bgPattern"></div>
+    <img id="handImg" src="img/hand_holy.png" alt="">
+    <div id="fallingArea">
+      <img id="protagonist" src="img/baby_crawl.png" alt="主人公">
+      <div id="protagonistGlow"></div>
+      <div id="hitRing"></div>
+    </div>
+    <div id="sceneFooter">
+      <div id="sceneText">👇 画面をスワイプ → 主人公を動かして 善✨ を取り 災💀 を避けろ</div>
+    </div>
+    <div id="godBubble" hidden>
+      <img class="g-avatar-img" src="img/god_bored.png" alt="">
+      <div class="g-body">
+        <div class="g-name">神</div>
+        <div class="g-text"></div>
+      </div>
+    </div>
+    <div id="floatLayer"></div>
+    <img id="sceneImg" alt="" hidden>
+    <div id="sceneIcon" hidden></div>
+
+    <!-- ボス出現オーバーレイ -->
+    <div id="bossOverlay" hidden>
+      <div class="boss-card">
+        <div class="boss-tag">⚠️ ボス出現 ⚠️</div>
+        <img class="boss-img" id="bossImg" src="img/big_skull.png" alt="">
+        <div class="boss-name" id="bossName">死神</div>
+        <div class="boss-dialog" id="bossDialog">
+          <img class="bd-avatar" id="bossDialogAvatar" src="img/god2_yawn.png" alt="">
+          <div class="bd-body">
+            <div class="bd-who" id="bossDialogWho">神</div>
+            <div class="bd-text" id="bossDialogText">セリフ</div>
+          </div>
+        </div>
+        <div class="boss-skip" id="bossSkipHint">▶ タップで進む</div>
+      </div>
+    </div>
+
+    <!-- ストーリー・インタールード(アクション中断・連続ストーリー表示) -->
+    <div id="storyOverlay" hidden>
+      <div class="story-card">
+        <div class="story-phase" id="storyPhase">📖 神話・第1幕</div>
+        <img class="story-img" id="storyImg" src="img/baby_crawl.png" alt="">
+        <div class="story-title" id="storyTitle">介入名</div>
+        <div class="story-text" id="storyText">テキスト</div>
+        <div class="story-dots" id="storyDots"></div>
+        <div class="story-god" id="storyGodLine" hidden>
+          <img class="story-god-avatar" src="img/god_explain.png" alt="">
+          <div class="story-god-body">
+            <div class="story-god-name">神</div>
+            <div class="story-god-text" id="storyGodText"></div>
+          </div>
+        </div>
+        <div class="story-skip">▶ タップで続ける</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 運命イベントモーダル -->
+  <div id="modal" hidden>
+    <div id="modalCard">
+      <div class="modalIcon">⚡</div>
+      <h3 id="modalTitle">運命のいたずら</h3>
+      <p id="modalText"></p>
+      <div id="modalChoices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- エンディング5コマ漫画 -->
+<section id="endingManga" class="screen" hidden>
+  <div class="ending-card">
+    <div class="ending-tag">📖 エンディング</div>
+    <img class="ending-img" id="endingMangaImg" src="" alt="">
+    <div class="ending-text" id="endingMangaText"></div>
+    <div class="ending-dots" id="endingMangaDots"></div>
+    <div class="ending-skip" id="endingMangaSkip">▶ タップで次へ (1/5)</div>
+  </div>
+</section>
+
+<!-- エンディングムービー(任意・予備) -->
+<section id="endingMovie" class="screen" hidden>
+  <video id="endingVideo" playsinline preload="auto" src="ending.mp4"></video>
+  <button id="endingSkipBtn">スキップ ▶</button>
+</section>
+
+<!-- 結果画面 -->
+<section id="result" class="screen" hidden>
+  <div class="result-inner">
+    <img id="resultImg" alt="" hidden>
+    <div class="skull">💀</div>
+    <p class="result-tag">3分経過。あなたは神をクビになりました。</p>
+    <h2 id="resultTitle">エンディング</h2>
+    <p id="resultDeath">死に様の詳細</p>
+    <div id="godFinal" hidden>
+      <img class="gf-avatar-img" src="img/god_explain.png" alt="">
+      <div class="gf-body">
+        <div class="gf-name">神より一言</div>
+        <div class="gf-text"></div>
+      </div>
+    </div>
+    <div class="score-box">
+      <div>幸福度 <span id="finalHap">0</span></div>
+      <div>死に様派手度 <span id="finalScore">0</span></div>
+      <div id="rank">ランク: ?</div>
+    </div>
+    <button id="retryBtn" class="big-btn">もう一度神になる</button>
+    <button id="shareBtn" class="sub-btn">📋 結果をコピー</button>
+    <p class="hint">「神になっても無理だった」</p>
+  </div>
+</section>
+
+<script src="audio.js"></script>
+<script src="data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
