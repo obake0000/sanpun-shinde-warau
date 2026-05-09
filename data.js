@@ -132,18 +132,24 @@ function pickDeath(tags) {
 }
 
 // === プロローグ (一生編) ===
+// 物語の流れ:
+// 1.受付 → 2.死亡通告 → 3.神の自己紹介 → 4.運命の書を見る → 5.凡人判定
+// → 6.特例で90秒貸す → 7.5幕進行 → 8.操作説明 → 9.死亡条件 → 10.皮肉オチ
+// → 11.あるある列挙 → 12.送り出し
 const PROLOGUE = [
-  { speaker:'???', avatar:'😶', godImg:'god_bored', text:'……はい、次の方どうぞ。' },
-  { speaker:'神', avatar:'😪', godImg:'god_bored', text:'今月で847人目です。\n慣れたものですよ。' },
-  { speaker:'神', avatar:'😏', godImg:'god_tablet', text:'では『運命の書』を確認します……。' },
-  { speaker:'神', avatar:'😏', godImg:'god_tablet', text:'氏名 記入なし。\n年収 平均以下。\n特技 特になし。' },
-  { speaker:'神', avatar:'🤲', godImg:'god_explain', text:'ああ、典型的な『凡人』ですね。' },
-  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'あなたに『90秒の人生』を貸し出します。\n生まれて、死ぬまで。' },
-  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'画面をスワイプ → 主人公が動く。\n降ってくる『運命』を避けてください。' },
-  { speaker:'神', avatar:'😪', godImg:'god_bored', text:'ステージは5幕、出生→学校→社畜→老後→墓場。\n自動で進みます。' },
-  { speaker:'神', avatar:'😈', godImg:'god_stern', text:'ああ、言い忘れていました。\n全部ハズレです。' },
-  { speaker:'神', avatar:'😈', godImg:'god_stern', text:'過労死、借金、孤独死、推し活破産。\n全部、あなた自身の『あるある』です。' },
-  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'では──\n笑って死ねますか？' },
+  { speaker:'???', avatar:'😪', godImg:'god_bored', text:'……はい、お疲れ様です。\n次の方どうぞ──。' },
+  { speaker:'???', avatar:'😪', godImg:'god_bored', text:'残念ながら、あなた、\nたった今、死にました。' },
+  { speaker:'神', avatar:'😏', godImg:'god_tablet', text:'こんにちは、退屈してる神です。\n死亡受付係を担当しています。' },
+  { speaker:'神', avatar:'😏', godImg:'god_tablet', text:'今月で847人目。\nもう慣れたものですよ。' },
+  { speaker:'神', avatar:'😏', godImg:'god_tablet', text:'えーと、運命の書を確認…\n年収 平均以下、特技 なし。' },
+  { speaker:'神', avatar:'🤲', godImg:'god_explain', text:'あー、典型的な『凡人』。\n…まあ、気の毒なので。' },
+  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'特例として、もう90秒だけ\n人生をお貸しします。' },
+  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'生まれて、死ぬまで90秒。\n出生→学校→社畜→老後→墓場 の5幕進行。' },
+  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'操作: 画面をスワイプ\n→ 主人公が左右に動きます。' },
+  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'降ってくる『運命』を避けて、\n生き延びてください。5回当たると早死に。' },
+  { speaker:'神', avatar:'😈', godImg:'god_stern', text:'──あ、ひとつ言い忘れました。\nどうせ全部ハズレです。' },
+  { speaker:'神', avatar:'😈', godImg:'god_stern', text:'過労死、借金、孤独死、推し活破産。\n全部、あなた自身の「あるある」。' },
+  { speaker:'神', avatar:'😏', godImg:'god_explain', text:'では、90秒の人生──\n笑って死ねますか?' },
 ];
 
 // === ヒット時の5コマ漫画テンプレ(ステージ別)・{label}にラベル挿入 ===
