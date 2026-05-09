@@ -400,7 +400,7 @@ function spawnItem() {
 function spawnHealFromDef(def) {
   const x = Math.random() * (state.fieldW - ITEM_SIZE - 8) + 4;
   const el = document.createElement('div');
-  el.className = 'fall-item good with-sprite';
+  el.className = 'fall-item heal with-sprite';
   if (def.sprite) {
     const img = document.createElement('img');
     img.src = `img/${def.sprite}.png`;
@@ -599,13 +599,7 @@ function flashHitLabel(def) {
 function showHealManga(def) {
   if (!state.running || state.modalOpen) return;
   state.modalOpen = true;
-  state.items.forEach(i => {
-    if (i.el) {
-      i.el.classList.add('vanish');
-      setTimeout(() => { if (i.el && i.el.parentNode) i.el.remove(); }, 250);
-    }
-  });
-  state.items = [];
+  // 他アイテムは消去せず、画面上に残す(モーダル中はframe loopで一時停止)
   const overlay = $('storyOverlay');
   const skipEl = overlay.querySelector('.story-skip');
   $('storyPhase').textContent = '✨ 幸運か?';

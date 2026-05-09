@@ -279,6 +279,12 @@ h1 .t3 { display: block; color: #fff; }
 .fall-item.bad .fi-label { background: rgba(180,30,30,0.95); border: 1px solid #f44; }
 .fall-item.good .fi-label.heal { background: rgba(255,180,0,0.95); border: 1px solid gold; color: #200; box-shadow: 0 0 8px gold; }
 
+/* 回復アイテム = オレンジ識別 (他の善・悪と区別) */
+.fall-item.heal { background: radial-gradient(circle, rgba(255,140,0,0.5), transparent 70%); box-shadow: 0 0 22px #ff8c00, inset 0 0 14px rgba(255,200,100,0.5); }
+.fall-item.heal::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid #ff8c00; animation: pulseRing 1.0s infinite; }
+.fall-item.heal.with-sprite img { filter: drop-shadow(0 0 10px #ff8c00) drop-shadow(0 0 20px rgba(255,140,0,0.7)); }
+.fall-item.heal .fi-label { background: rgba(255,140,0,0.97); border: 1px solid #ff8c00; color: #200; box-shadow: 0 0 10px #ff8c00; }
+
 /* ボスフラッシュ(wave出現時の大型画像) */
 .boss-flash { position: absolute; left: 50%; top: 18%; transform: translate(-50%, -50%); z-index: 30; pointer-events: none; animation: bossFlashIn 1.2s ease forwards; }
 .boss-flash img { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 0 18px red); }
