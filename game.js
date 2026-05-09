@@ -475,6 +475,7 @@ function triggerWave(w) {
           sprite: w.minionSprite,
           stage: STAGES[state.stageIndex].id,
           tags: w.tags,
+          mass: true,
         });
         count++;
       }
@@ -504,6 +505,7 @@ function spawnWallRow(w) {
       sprite: w.sprite,
       stage: STAGES[state.stageIndex].id,
       tags: w.tags,
+      mass: true,
     }, x);
   }
 }
@@ -531,7 +533,9 @@ function flashBossAppear(w) {
 function spawnItemFromDef(def, fixedX) {
   const x = fixedX !== undefined ? fixedX : Math.random() * (state.fieldW - ITEM_SIZE - 8) + 4;
   const el = document.createElement('div');
-  el.className = 'fall-item bad with-sprite';
+  const cls = ['fall-item','bad','with-sprite'];
+  if (def.mass) cls.push('mass');
+  el.className = cls.join(' ');
   if (def.sprite) {
     const img = document.createElement('img');
     img.src = `img/${def.sprite}.png`;
@@ -585,7 +589,13 @@ function collide(item) {
     state.items = state.items.filter(i => i !== item);
   }, 450);
   updateLives();
-  flashHitLabel(def); // 簡易表示のみ。漫画は終了時の死に様で
+  // 大量発生(mass)はポップアップのみ、通常の赤アイテムは5コマ漫画発動
+  if (def.mass) {
+    flashHitLabel(def);
+  } else {
+    state.spawnPaused = true;
+    setTimeout(() => showHitManga(def), 500);
+  }
 }
 
 function flashHitLabel(def) {
