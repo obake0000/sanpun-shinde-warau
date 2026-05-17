@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://obake0000.github.io/sanpun-shinde-warau/sitemap.xml
